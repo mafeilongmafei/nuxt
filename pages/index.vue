@@ -43,8 +43,8 @@
         <div class="nav">
           <div v-swiper:mySwiper="swiperOption">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" v-for="banner in banners" :key="banner">
-                <img :src="banner" />
+              <div class="swiper-slide" v-for="banner in banners" :key="banner.imgurl">
+                <img :src="banner.imgurl" />
               </div>
             </div>
             <div class="swiper-pagination" slot="pagination"></div>
@@ -279,23 +279,17 @@
         </li>
       </ul>
     </div>
-    <div class="footer">
-      <Footer></Footer>
-    </div>
+    
   </div>
 </template>
 
 <script>
 import Search from "~/components/search.vue";
-import Footer from "~/components/footer.vue";
+import { getBannerList } from "~/server/api.js"
 export default {
   data() {
     return {
-      banners: [
-        "https://imgcdn.huanjutang.com/file/2019/12/02/0506196122ec48a07944260ae5ae1e20.jpg?imageView2/2/w/1200/format/jpg/interlace/1/q/100|imageslim",
-        "https://imgcdn.huanjutang.com/assets/img/20191203/5de6306900ee8.jpeg?imageView2/2/w/1200/format/jpg/interlace/1/q/100|imageslim",
-        "https://imgcdn.huanjutang.com/file/2019/12/05/bc98bcdba06c02993444408e8636a9ca.jpg?imageView2/2/w/1200/format/jpg/interlace/1/q/100|imageslim"
-      ],
+      banners: [],
       swiperOption: {
         loop: true,
         pagination: {
@@ -312,7 +306,12 @@ export default {
   },
   components: {
     Search,
-    Footer
+  },
+  async asyncData() {
+   let res = await getBannerList()
+   return {
+     banners : res.arr
+   }
   }
 };
 </script>
@@ -521,9 +520,6 @@ export default {
         }
       }
     }
-  }
-  .footer {
-    width: 100%;
   }
 }
 </style>
