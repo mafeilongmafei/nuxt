@@ -453,7 +453,8 @@ export default {
       //
     },
     ti() {
-      history.pushState(null , "" , "http://localhost:3000/list/2")
+     this.$router.push("/list/hot")
+   
     }
   }
 };

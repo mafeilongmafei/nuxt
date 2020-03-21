@@ -30,7 +30,7 @@ module.exports = {
    */
   plugins: [
     "@/plugins/element-ui",
-    { src: "~plugins/vue-awesome-swipe", ssr: false },
+    { src: "~/plugins/vue-awesome-swipe", ssr: false },
     { src: "@/plugins/loading", ssr: false }
   ],
   /*
@@ -50,5 +50,13 @@ module.exports = {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
+  },
+  router: {
+    extendRoutes(routes, resolve) {
+      routes.push({
+        path: "/list/*",
+        component: resolve(__dirname, "pages/list/index.vue")
+      });
+    }
   }
 };
